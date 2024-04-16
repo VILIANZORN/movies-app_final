@@ -68,25 +68,38 @@ function MoviesCard({ movie }) {
     (value) => {
       swapiService.addMovieRating(idMovie, value, guestSession.guestSessionId);
     },
-    [idMovie, guestSession.guestSessionId] 
+    [idMovie, guestSession.guestSessionId]
   );
 
   return (
     <div className="movie-card">
-      <Image width={183} height={281} src={imageSrc} alt={title} />
-      <div className="rate-circle" style={{ borderColor: color }}>
-        {rating.toFixed(1)}
+      <div className="movie-card__image">
+        <Image src={imageSrc} alt={title} />
       </div>
-      <div className="movie-card__info">
-        <h2>{limitTitle(title)}</h2>
-        <p className="movie-card__date">{formattedReleaseDate}</p>
-        <div className="tags">
-          {genreIds.map((id) => (
-            <Tag key={id}>{genreNames[id]}</Tag>
-          ))}
+      <div className="movie-card__header">
+        <div className="rate-circle" style={{ borderColor: color }}>
+          {rating.toFixed(1)}
         </div>
+
+        <div className="movie-card__info">
+          <h2>{limitTitle(title)}</h2>
+          <p className="movie-card__date">{formattedReleaseDate}</p>
+          <div className="tags">
+            {genreIds.map((id) => (
+              <Tag key={id}>{genreNames[id]}</Tag>
+            ))}
+          </div>
+        </div>
+      </div>
+      <div>
         <p className="movie-card__overview">{shortDes(overview)}</p>
-        <Rate className="movie-card__Rate" allowHalf defaultValue={0} count={10} onChange={handleRateChange} />
+        <Rate
+          className="movie-card__Rate"
+          allowHalf
+          defaultValue={0}
+          count={10}
+          onChange={handleRateChange}
+        />
       </div>
     </div>
   );

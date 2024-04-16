@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Tabs } from 'antd';
 
 import MoviesList from '../movies-list/movies-list';
 import RatedMoviesList from '../rated/rated';
 
 function Header() {
+  const [ratedTabKey, setRatedTabKey] = useState('1');
+
+  const handleTabChange = (key) => {
+    setRatedTabKey(key);
+  };
+
   const items = [
     {
       label: 'Search',
@@ -14,13 +20,20 @@ function Header() {
     {
       label: 'Rated',
       key: '2',
-      children: <RatedMoviesList />, 
+      children: <RatedMoviesList onRatedTabClick={() => handleTabChange('2')} />,
     },
   ];
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center'}}>
-      <Tabs defaultActiveKey="1" centered items={items} style={{ width: '100%', margin: 'auto' }} />
+    <div style={{ display: 'flex', justifyContent: 'center' }}>
+      <Tabs
+        defaultActiveKey="1"
+        activeKey={ratedTabKey}
+        centered
+        items={items}
+        onChange={handleTabChange} 
+        style={{ width: '100%', margin: 'auto' }}
+      />
     </div>
   );
 }

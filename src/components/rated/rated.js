@@ -5,7 +5,7 @@ import SwapiService from '../../services/swapi-service';
 import { useMovies } from '../context/movies-context';
 import MoviesCard from '../movies-card/movies-card';
 
-function RatedMoviesList() {
+function RatedMoviesList({ onRatedTabClick }) {
   const { guestSessionId } = useMovies();
   const [ratedMovies, setRatedMovies] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -25,8 +25,10 @@ function RatedMoviesList() {
       }
     };
 
-    fetchRatedMovies();
-  }, [guestSessionId]);
+    if (onRatedTabClick) {
+      fetchRatedMovies(); // Вызываем fetchRatedMovies при каждом изменении onRatedTabClick
+    }
+  }, [guestSessionId, onRatedTabClick]);
 
   if (loading) {
     return <Spin size="large" />;
